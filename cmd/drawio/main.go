@@ -5,12 +5,13 @@ import (
 	"image/png"
 	"log"
 	"os"
+	"time"
 
 	"github.com/KaymeKaydex/drawio.git"
 )
 
 func main() {
-
+	t := time.Now()
 	data, err := os.ReadFile("testdata/simple/colored-background.drawio")
 	if err != nil {
 		log.Fatal(err)
@@ -23,7 +24,7 @@ func main() {
 
 	fmt.Println(mxfile)
 
-	image, err := drawio.Export(*mxfile).ToPNG()
+	image, err := drawio.Export(*mxfile).ToImage()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,4 +36,6 @@ func main() {
 	}
 	defer myfile.Close()
 	png.Encode(myfile, image) // output file /tmp/two_rectangles.png
+
+	fmt.Println(time.Since(t))
 }

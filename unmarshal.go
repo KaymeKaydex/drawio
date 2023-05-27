@@ -39,11 +39,15 @@ type Root struct {
 }
 
 type MXCell struct {
-	ID     string `xml:"id,attr"`
-	Parent string `xml:"parent,attr,omitempty"`
-	Value  string `xml:"value,attr,omitempty"`
-	Style  string `xml:"style,attr,omitempty"`
-	Vertex bool   `xml:"vertex,attr,omitempty"`
+	ID          string `xml:"id,attr"`
+	Parent      string `xml:"parent,attr,omitempty"`
+	Value       string `xml:"value,attr,omitempty"`
+	Style       string `xml:"style,attr,omitempty"`
+	Vertex      bool   `xml:"vertex,attr,omitempty"`
+	Source      string `xml:"source,attr,omitempty"`      // только для связующих линий
+	Target      string `xml:"target,attr,omitempty"`      // только для связующих линий
+	FillColor   string `xml:"fillColor,attr,omitempty"`   // цвет фона
+	StrokeColor string `xml:"strokeColor,attr,omitempty"` // цвет рамки
 
 	MXGeometry *MXGeometry `xml:"mxGeometry,omitempty"`
 }
