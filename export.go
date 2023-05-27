@@ -49,9 +49,7 @@ func (e *Exporter) ToImage() (image.Image, error) {
 	// set background
 
 	// if background is empty
-	if f.Diagram.MXGraphModel.Background == "" {
-		dc.SetRGBA(0, 0, 0, 1)
-	} else {
+	if f.Diagram.MXGraphModel.Background != "" {
 		color, err := parseHexColor(f.Diagram.MXGraphModel.Background)
 		if err != nil {
 			return nil, err
@@ -66,36 +64,20 @@ func (e *Exporter) ToImage() (image.Image, error) {
 			continue
 		}
 
-		dc.DrawRectangle(float64(cell.MXGeometry.X),
-			float64(cell.MXGeometry.Y),
-			float64(cell.MXGeometry.Width),
-			float64(cell.MXGeometry.Height))
+		style := ParseStyle(cell.Style)
 
-		if cell.FillColor == "" {
-			dc.SetColor(color.White)
-		} else {
-			cellColor, err := parseHexColor(cell.FillColor)
+		if style.IsEllipse {
+			cell.FillColor = style.FillColor
+			err := e.drawCircle(dc, cell)
 			if err != nil {
 				return nil, err
 			}
-
-			dc.SetColor(cellColor)
+		} else {
+			err := e.drawRectangle(dc, cell)
+			if err != nil {
+				return nil, err
+			}
 		}
-		dc.Fill()
-		// draw stroke
-		// set black if empty
-		if cell.StrokeColor == "" {
-			dc.DrawRectangle(float64(cell.MXGeometry.X),
-				float64(cell.MXGeometry.Y),
-				float64(cell.MXGeometry.Width),
-				float64(cell.MXGeometry.Height))
-
-			dc.SetStrokeStyle(gg.NewSolidPattern(color.Black))
-			dc.Stroke()
-			dc.Fill()
-		} // todo: if not empty?
-
-		const S = 1024
 
 		if cell.Value != "" {
 			dc.SetColor(color.Black)
@@ -106,11 +88,24 @@ func (e *Exporter) ToImage() (image.Image, error) {
 				0.5, 0.5)
 			dc.Fill()
 		}
+		dc.Stroke()
 
 		// there is link
 		if cell.Source != "" {
-			if cell.Source != "" { // if there is link between 2 cells
+			if cell.Target != "" { // if there is link between 2 cells
+				e.cellsMapWg.Wait()      // wait if map not done
+				dc.SetColor(color.Black) // todo
 
+				sourceGeometry := e.cellsMap[cell.Source].MXGeometry
+				targetGeometry := e.cellsMap[cell.Target].MXGeometry
+
+				dc.DrawLine(
+					float64(sourceGeometry.X)+float64(sourceGeometry.Width),
+					float64(sourceGeometry.Y)+float64(sourceGeometry.Height)/2,
+					float64(targetGeometry.X)+float64(targetGeometry.Width),
+					float64(targetGeometry.Y)+float64(targetGeometry.Height)/2)
+				dc.Stroke()
+				dc.Fill()
 			} else { // if there is link between cell and virtual point
 
 			}
@@ -118,4 +113,58 @@ func (e *Exporter) ToImage() (image.Image, error) {
 	}
 
 	return dc.Image(), nil
+}
+
+func (e *Exporter) drawCircle(dc *gg.Context, cell MXCell) error {
+	radius := cell.MXGeometry.Width / 2
+
+	dc.DrawCircle(cell.MXGeometry.X+radius, cell.MXGeometry.Y+radius, radius)
+
+	// set color
+	if cell.FillColor == "" {
+		dc.SetColor(color.White)
+	} else {
+		cellColor, err := parseHexColor(cell.FillColor)
+		if err != nil {
+			return err
+		}
+
+		dc.SetColor(cellColor)
+	}
+	dc.Fill()
+
+	return nil
+}
+
+func (e *Exporter) drawRectangle(dc *gg.Context, cell MXCell) error {
+	dc.DrawRectangle(cell.MXGeometry.X,
+		cell.MXGeometry.Y,
+		cell.MXGeometry.Width,
+		cell.MXGeometry.Height)
+
+	if cell.FillColor == "" {
+		dc.SetColor(color.White)
+	} else {
+		cellColor, err := parseHexColor(cell.FillColor)
+		if err != nil {
+			return err
+		}
+
+		dc.SetColor(cellColor)
+	}
+	dc.Fill()
+	// draw stroke
+	// set black if empty
+	if cell.StrokeColor == "" {
+		dc.DrawRectangle(cell.MXGeometry.X,
+			cell.MXGeometry.Y,
+			cell.MXGeometry.Width,
+			cell.MXGeometry.Height)
+
+		dc.SetStrokeStyle(gg.NewSolidPattern(color.Black))
+		dc.Stroke()
+		dc.Fill()
+	} // todo: if not empty?
+
+	return nil
 }

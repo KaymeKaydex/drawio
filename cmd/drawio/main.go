@@ -12,7 +12,7 @@ import (
 
 func main() {
 	t := time.Now()
-	data, err := os.ReadFile("testdata/simple/link.drawio")
+	data, err := os.ReadFile("testdata/simple/circle.drawio")
 	if err != nil {
 		log.Fatal(err)
 	}
