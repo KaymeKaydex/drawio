@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2023-05-27T14:38:39.823Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15" etag="het7EqLD61Mcz0DXTIGm" version="21.3.4" type="device">
+  <diagram name="Страница 1" id="ab4zhD9OyvubQw2XyDDP">
+    <mxGraphModel dx="838" dy="545" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="nGY1wcl1MpIaO9MI2HK8-4" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="60" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="nGY1wcl1MpIaO9MI2HK8-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nGY1wcl1MpIaO9MI2HK8-5" target="nGY1wcl1MpIaO9MI2HK8-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nGY1wcl1MpIaO9MI2HK8-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nGY1wcl1MpIaO9MI2HK8-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="nGY1wcl1MpIaO9MI2HK8-7" target="nGY1wcl1MpIaO9MI2HK8-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nGY1wcl1MpIaO9MI2HK8-7" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="150" y="70" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -44,6 +44,7 @@ func (e *Exporter) ToImage() (image.Image, error) {
 
 	dc := gg.NewContext(f.Diagram.MXGraphModel.PageWidth, f.Diagram.MXGraphModel.PageHeight)
 
+	dc.Push()
 	dc.DrawRectangle(0, 0, float64(f.Diagram.MXGraphModel.PageWidth), float64(f.Diagram.MXGraphModel.PageHeight))
 
 	// set background
@@ -68,6 +69,8 @@ func (e *Exporter) ToImage() (image.Image, error) {
 
 		if style.IsEllipse {
 			cell.FillColor = style.FillColor
+			cell.StrokeColor = style.StrokeColor
+
 			err := e.drawCircle(dc, cell)
 			if err != nil {
 				return nil, err
@@ -112,6 +115,8 @@ func (e *Exporter) ToImage() (image.Image, error) {
 		}
 	}
 
+	dc.Pop()
+
 	return dc.Image(), nil
 }
 
@@ -132,6 +137,14 @@ func (e *Exporter) drawCircle(dc *gg.Context, cell MXCell) error {
 		dc.SetColor(cellColor)
 	}
 	dc.Fill()
+
+	if cell.StrokeColor == "" {
+		dc.DrawCircle(cell.MXGeometry.X+radius, cell.MXGeometry.Y+radius, radius)
+
+		dc.SetStrokeStyle(gg.NewSolidPattern(color.Black))
+		dc.Stroke()
+		dc.Fill()
+	} // todo: if not empty?
 
 	return nil
 }
