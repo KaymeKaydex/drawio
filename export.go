@@ -3,18 +3,39 @@ package drawio
 import (
 	"image"
 	"image/color"
+	"sync"
 
 	"github.com/fogleman/gg"
 )
 
 func Export(file MXFile) *Exporter {
-	return &Exporter{
-		f: file,
+	e := &Exporter{}
+	e.f = file
+	e.cellsMapWg = sync.WaitGroup{}
+
+	// we need create map with id from wg for draw links faster
+	e.cellsMapWg.Add(1)
+	go func(e *Exporter) {
+		e.cellsMap = createCellsMap(e)
+		e.cellsMapWg.Done()
+	}(e)
+
+	return e
+}
+
+func createCellsMap(e *Exporter) map[string]MXCell {
+	m := map[string]MXCell{}
+	for _, cell := range e.f.Diagram.MXGraphModel.Root.MXCells {
+		m[cell.ID] = cell
 	}
+
+	return m
 }
 
 type Exporter struct {
-	f MXFile
+	f          MXFile
+	cellsMap   map[string]MXCell
+	cellsMapWg sync.WaitGroup
 }
 
 func (e *Exporter) ToImage() (image.Image, error) {
@@ -84,6 +105,15 @@ func (e *Exporter) ToImage() (image.Image, error) {
 				float64(cell.MXGeometry.Y)+float64(cell.MXGeometry.Height)/2,
 				0.5, 0.5)
 			dc.Fill()
+		}
+
+		// there is link
+		if cell.Source != "" {
+			if cell.Source != "" { // if there is link between 2 cells
+
+			} else { // if there is link between cell and virtual point
+
+			}
 		}
 	}
 

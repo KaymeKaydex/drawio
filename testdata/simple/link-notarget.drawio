@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-05-27T13:21:57.393Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15" etag="ypRockjiDiH5vaZfFxw6" version="21.3.4" type="device">
+<mxfile host="app.diagrams.net" modified="2023-05-27T13:32:48.165Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15" etag="qudylsbFzN9nqyodvdXe" version="21.3.4" type="device">
   <diagram name="Страница 1" id="Tk0heQ0ry-eu_fY6yRR6">
     <mxGraphModel dx="838" dy="545" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFB366" math="0" shadow="0">
       <root>
@@ -6,6 +6,11 @@
         <mxCell id="1" parent="0" />
         <mxCell id="sGSAAn851OBY-35ecato-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="sGSAAn851OBY-35ecato-1" target="sGSAAn851OBY-35ecato-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PCgTN_QkUz_J60R6lAeq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sGSAAn851OBY-35ecato-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="70" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="sGSAAn851OBY-35ecato-1" value="Test" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="120" y="150" width="240" height="120" as="geometry" />

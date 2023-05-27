@@ -54,11 +54,17 @@ type MXCell struct {
 
 type MXGeometry struct {
 	// x="340" y="230" width="200" height="110"
-	X      int    `xml:"x,attr"`
-	Y      int    `xml:"y,attr"`
-	Width  int    `xml:"width,attr"`
-	Height int    `xml:"height,attr"`
-	As     string `xml:"as,attr"`
+	X       int      `xml:"x,attr"`
+	Y       int      `xml:"y,attr"`
+	Width   int      `xml:"width,attr"`
+	Height  int      `xml:"height,attr"`
+	As      string   `xml:"as,attr"`
+	MXPoint *MXPoint `xml:"mxPoint,omitempty"` // for link without target; for them target is some point
+}
+
+type MXPoint struct {
+	X int `xml:"x,attr"`
+	Y int `xml:"y,attr"`
 }
 
 func Unmarshal(data []byte) (*MXFile, error) {
