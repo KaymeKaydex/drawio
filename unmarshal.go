@@ -1,0 +1,69 @@
+package drawio
+
+import (
+	"encoding/xml"
+	"time"
+)
+
+type MXFile struct {
+	Host     string    `xml:"host,attr"`
+	Modified time.Time `xml:"modified,attr"`
+	Agent    string    `xml:"agent,attr"`
+	Version  string    `xml:"version,attr"`
+	Etag     string    `xml:"etag,attr"`
+	Type     string    `xml:"type,attr"`
+
+	Diagram Diagram `xml:"diagram"`
+}
+
+type Diagram struct {
+	ID   string `xml:"id,attr"`
+	Name string `xml:"name,attr"`
+
+	MXGraphModel MXGraphModel `xml:"mxGraphModel"`
+}
+
+type MXGraphModel struct {
+	DX         int    `xml:"dx,attr"`
+	DY         int    `xml:"dy,attr"`
+	Grid       bool   `xml:"grid,attr"`
+	PageWidth  int    `xml:"pageWidth,attr"`
+	PageHeight int    `xml:"pageHeight,attr"`
+	Background string `xml:"background,attr,omitempty"` // hex color
+
+	Root Root `xml:"root"`
+}
+
+type Root struct {
+	MXCells []MXCell `xml:"mxCell,omitempty"`
+}
+
+type MXCell struct {
+	ID     string `xml:"id,attr"`
+	Parent string `xml:"parent,attr,omitempty"`
+	Value  string `xml:"value,attr,omitempty"`
+	Style  string `xml:"style,attr,omitempty"`
+	Vertex bool   `xml:"vertex,attr,omitempty"`
+
+	MXGeometry *MXGeometry `xml:"mxGeometry,omitempty"`
+}
+
+type MXGeometry struct {
+	// x="340" y="230" width="200" height="110"
+	X      int    `xml:"x,attr"`
+	Y      int    `xml:"y,attr"`
+	Width  int    `xml:"width,attr"`
+	Height int    `xml:"height,attr"`
+	As     string `xml:"as,attr"`
+}
+
+func Unmarshal(data []byte) (*MXFile, error) {
+	f := &MXFile{}
+
+	err := xml.Unmarshal(data, f)
+	if err != nil {
+		return nil, err
+	}
+
+	return f, nil
+}
